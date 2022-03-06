@@ -14,3 +14,4 @@ new FPSDetector('.fps-detector', {
     height: 30
 });
 ```
+see [preview/index.html](preview/index.html)
