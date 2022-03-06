@@ -210,7 +210,7 @@ const fixableRules = {
     }],
     'prefer-const': 'error',
     'prefer-numeric-literals': 'error',
-    'prefer-object-spread': 'error',
+    'prefer-object-spread': 'off',
     'prefer-template': 'error',
     'quotes': ['error', 'single', {
         'avoidEscape': true

@@ -1,18 +1,25 @@
 class FPSMonitor {
-    constructor($container) {
+    constructor($container, option) {
         if (typeof $container === 'string') {
             $container = document.querySelector($container);
         }
-        const rect = $container.getBoundingClientRect();
 
-        this.width = Math.round(rect.width);
-        this.height = Math.round(rect.height);
+        this.option = Object.assign({
+            width: 85,
+            height: 30,
+            colors: ['red', 'orange', 'green'],
+            bgColor: '#fff',
+            fgColor: '#ddd',
+            padding: 1
+        }, option);
 
         const $canvas = document.createElement('canvas');
-        $canvas.setAttribute('width', this.width);
-        $canvas.setAttribute('height', this.height);
-        $canvas.setAttribute('title', 'FPS');
+        $canvas.style.display = 'block';
+        $canvas.setAttribute('width', this.option.width);
+        $canvas.setAttribute('height', this.option.height);
+
         $container.appendChild($canvas);
+        $container.title = 'FPS Monitor';
 
         this.numbers = {
             '-': {
@@ -49,7 +56,7 @@ class FPSMonitor {
                 'd': 'M9.435.638 7.711 2.29v.391l-.001.001v3.551l1.724 1.568V4.396l.001-.255V.639zM1.289 7.8l1.724-1.652v-.391h.001V2.206L1.29.638v3.404l-.001.255v3.502zm.492-7.849 1.652 1.724h.391l.001.001h3.551L8.944-.048H5.539l-.255-.001H1.782zm.834 8.534-.558-.431 1.116-.862h4.378l1.116.862-1.116.862H3.173l-.558-.431zm6.85 7.026-1.724-1.652v-.391H7.74V9.917l1.724-1.568v3.405l.001.255v3.502z'
             }
         };
-        this.initNumbers($container);
+        this.initNumbers($canvas);
 
         this.ctx = $canvas.getContext('2d');
         this.list = [];
@@ -62,33 +69,35 @@ class FPSMonitor {
 
     render() {
 
-        const w = this.width;
-        const h = this.height;
+        const w = this.option.width;
+        const h = this.option.height;
         const ctx = this.ctx;
         const list = this.list;
 
         const iw = 11;
         const ih = 16;
 
-        const lx = 1;
-        const ly = 1;
-        const lw = w - iw * 2 - 3;
-        const lh = h - 2;
+        const padding = this.option.padding;
 
-        let start = 1;
+        const lx = padding;
+        const ly = padding;
+        const lw = w - (iw * 2 + padding * 3);
+        const lh = h - padding * 2;
+
+        let start = padding;
         if (list.length > lw) {
             list.length = lw;
         } else {
-            start = lw - list.length + 1;
+            start = padding + (lw - list.length);
         }
 
         //console.log(list);
         
-        ctx.fillStyle = '#fff';
+        ctx.fillStyle = this.option.bgColor;
         //ctx.globalAlpha = 1;
         ctx.fillRect(0, 0, w, h);
 
-        ctx.fillStyle = '#ddd';
+        ctx.fillStyle = this.option.fgColor;
         ctx.fillRect(lx, ly, lw, lh);
 
         const ls = [].concat(list).reverse();
@@ -97,25 +106,16 @@ class FPSMonitor {
         let lastColor;
         ls.forEach((item, i) => {
             lastItem = item;
-            let color = 'green';
-            if (item < 10) {
-                color = 'red';
-            } else if (item < 24) {
-                color = 'orange';
-            }
+            const color = this.getColor(item);
             lastColor = color;
             ctx.fillStyle = color;
             const ch = Math.floor(item / 60 * lh);
             ctx.fillRect(start + i, lh + ly - ch, 1, ch);
         });
 
-
-        let str = `${lastItem}`;
-        if (str.length < 2) {
-            str = `0${str}`;
-        }
-
-        const x = Math.floor(w - iw * 2 - 1);
+        const str = `${lastItem}`.padStart(2, '0');
+        
+        const x = Math.floor(lx + lw + padding);
         const y = Math.ceil((h - ih) / 2);
 
         str.split('').forEach((s, i) => {
@@ -127,16 +127,26 @@ class FPSMonitor {
 
     }
 
+    getColor(v) {
+        const colors = this.option.colors;
+        if (v < 10) {
+            return colors[0];
+        }
+        if (v < 30) {
+            return colors[1];
+        }
+        return colors[2];
+    }
+
     initNumbers($container) {
-        const $div = document.createElement('div');
-        $div.style.cssText = 'position:absolute;top:0;left:0;display:none;';
-        $container.appendChild($div);
-        $container.style.position = 'relative';
         const numbers = this.numbers;
-        const colors = ['red', 'orange', 'green'];
+        const colors = this.option.colors;
         Object.keys(numbers).forEach(key => {
             const item = numbers[key];
             colors.forEach(color => {
+                if (item[color]) {
+                    return;
+                }
                 const svg = `
                 <svg viewBox="0 0 11 16" width="11" height="16" xmlns="http://www.w3.org/2000/svg">
                     <path fill="${color}" d="${item.d}" />
@@ -144,7 +154,7 @@ class FPSMonitor {
                 `;
                 const $img = document.createElement('img');
                 $img.src = `data:image/svg+xml;base64,${btoa(svg)}`;
-                $div.appendChild($img);
+                $container.appendChild($img);
                 item[color] = $img;
             });
         });
@@ -184,7 +194,7 @@ class FPSMonitor {
             list.unshift(this.frames);
             this.render();
             //next
-            this.frames = 1;
+            this.frames = 0;
             this.startTime = now - d;
         }
        
