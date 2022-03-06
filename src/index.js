@@ -8,6 +8,8 @@ class FPSDetector {
             width: 85,
             height: 30,
             colors: ['red', 'orange', 'green'],
+            fpsLevel: [10, 30],
+            memLevel: [100, 50],
             bgColor: '#fff',
             fgColor: '#ddd',
             padding: 1
@@ -19,7 +21,11 @@ class FPSDetector {
         $canvas.setAttribute('height', this.option.height);
 
         $container.appendChild($canvas);
-        $container.title = 'FPS Monitor';
+        $container.title = 'FPS Detector';
+        $container.onclick = (e) => {
+            this.showMemory = !this.showMemory;
+            this.render();
+        };
 
         this.numbers = {
             '-': {
@@ -89,10 +95,26 @@ class FPSDetector {
         }
 
         //console.log(list);
-        
+
         ctx.fillStyle = this.option.bgColor;
-        //ctx.globalAlpha = 1;
         ctx.fillRect(0, 0, w, h);
+
+        if (this.showMemory) {
+
+            const memory = window.performance.memory;
+            const mem = memory.usedJSHeapSize / 1048576;
+            //const memTotal = memory.jsHeapSizeLimit / 1048576;
+            //const per = (mem / memTotal * 100).toFixed(2);
+    
+            //console.log(mem, per);
+            ctx.font = 'Bold 16px';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = this.getMEMColor(mem);
+            ctx.fillText(`MEM ${mem.toFixed(1)} MB`, w / 2, h / 2);
+
+            return;
+        }
 
         ctx.fillStyle = this.option.fgColor;
         ctx.fillRect(lx, ly, lw, lh);
@@ -103,7 +125,7 @@ class FPSDetector {
         let lastColor;
         ls.forEach((item, i) => {
             lastItem = item;
-            const color = this.getColor(item);
+            const color = this.getFPSColor(item);
             lastColor = color;
             ctx.fillStyle = color;
             const ch = Math.max(Math.floor(item / 60 * lh), 1);
@@ -124,15 +146,32 @@ class FPSDetector {
 
     }
 
-    getColor(v) {
+    //asc
+    getFPSColor(v) {
         const colors = this.option.colors;
-        if (v < 10) {
-            return colors[0];
+        const fpsLevel = this.option.fpsLevel;
+        let i;
+        for (i = 0; i < fpsLevel.length; i++) {
+            const item = fpsLevel[i];
+            if (v < item) {
+                return colors[i];
+            }
         }
-        if (v < 30) {
-            return colors[1];
+        return colors[i];
+    }
+
+    //desc
+    getMEMColor(v) {
+        const colors = this.option.colors;
+        const memLevel = this.option.memLevel;
+        let i;
+        for (i = 0; i < memLevel.length; i++) {
+            const item = memLevel[i];
+            if (v > item) {
+                return colors[i];
+            }
         }
-        return colors[2];
+        return colors[i];
     }
 
     initNumbers($container) {
