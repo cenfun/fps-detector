@@ -109,7 +109,7 @@ class FPSMonitor {
             const color = this.getColor(item);
             lastColor = color;
             ctx.fillStyle = color;
-            const ch = Math.floor(item / 60 * lh);
+            const ch = Math.max(Math.floor(item / 60 * lh), 1);
             ctx.fillRect(start + i, lh + ly - ch, 1, ch);
         });
 

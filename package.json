@@ -4,6 +4,9 @@
     "description": "fps-monitor",
     "main": "dist/fps-monitor.js",
     "scripts": {},
+    "files": [
+        "dist"
+    ],
     "repository": {
         "type": "git",
         "url": "git+https://github.com/cenfun/fps-monitor.git"
