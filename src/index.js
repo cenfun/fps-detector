@@ -59,9 +59,6 @@ class FPSMonitor {
         this.initNumbers($canvas);
 
         this.ctx = $canvas.getContext('2d');
-        this.list = [];
-        this.frames = 0;
-        this.startTime = window.performance.now();
         
         this.start();
 
@@ -84,11 +81,11 @@ class FPSMonitor {
         const lw = w - (iw * 2 + padding * 3);
         const lh = h - padding * 2;
 
-        let start = padding;
+        let startIndex = padding;
         if (list.length > lw) {
             list.length = lw;
         } else {
-            start = padding + (lw - list.length);
+            startIndex = padding + (lw - list.length);
         }
 
         //console.log(list);
@@ -110,7 +107,7 @@ class FPSMonitor {
             lastColor = color;
             ctx.fillStyle = color;
             const ch = Math.max(Math.floor(item / 60 * lh), 1);
-            ctx.fillRect(start + i, lh + ly - ch, 1, ch);
+            ctx.fillRect(startIndex + i, lh + ly - ch, 1, ch);
         });
 
         const str = `${lastItem}`.padStart(2, '0');
@@ -168,6 +165,17 @@ class FPSMonitor {
     }
 
     start() {
+        this.stopped = false;
+        this.list = [];
+        this.frames = 0;
+        this.startTime = window.performance.now();
+        this.update();
+    }
+
+    update() {
+        if (this.stopped) {
+            return;
+        }
         window.requestAnimationFrame(() => {
             this.count();
         });
@@ -194,11 +202,15 @@ class FPSMonitor {
             list.unshift(this.frames);
             this.render();
             //next
-            this.frames = 0;
+            this.frames = 1;
             this.startTime = now - d;
         }
        
-        this.start();
+        this.update();
+    }
+
+    stop() {
+        this.stopped = true;
     }
 
 }
