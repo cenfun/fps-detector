@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <link rel="icon" href="data:,">
+    <title>fps-monitor demo</title>
+    <!--inject:start-->
+    <script src="../dist/fps-monitor.js"></script>
+    <!--inject:end-->
+    <style>
+        body {
+            background-color: black; 
+            color: #fff; 
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="fps-monitor" style="width: 120px; height: 30px;"></div>
+    <p>
+        <label>times:</label>
+        <select id="st_times">
+            <option>10</option>
+            <option>50</option>
+            <option>100</option>
+            <option>500</option>
+        </select>
+    </p>
+    <p>
+        <label>rects:</label>
+        <select id="st_rects">
+            <option>10</option>
+            <option>50</option>
+            <option>100</option>
+            <option>500</option>
+            <option>1000</option>
+        </select> x 1000
+    </p>
+    <p>
+        <button id="bt_render">start</button>
+    </p>
+    <canvas id="container" width="1000" height="500"></canvas>
+    <script>
+        const FPSMonitor = window['fps-monitor'].FPSMonitor;
+        new FPSMonitor('.fps-monitor');
+
+        //mock low performance
+        let timeout;
+        const $render = document.getElementById('bt_render');
+
+        function singleProcess(ctx) {
+            const arr = ['#ff0000', '#00ff00', '#0000ff', '#cc0000', '#00cc00', '#0000cc'];
+            const w = 1000;
+            const h = 500;
+            let i = -1;
+            while (i++ < 1000) {
+                const x = Math.round(w * Math.random());
+                const y = Math.round(h * Math.random());
+                ctx.fillStyle = arr[Math.round(arr.length * Math.random())];
+                ctx.fillRect(x, y, 10, 10);
+            }
+        }
+
+        function handler(ctx, times, rects) {
+            if (times <= 0) {
+                $render.innerHTML = 'start';
+                return;
+            }
+            let i = -1;
+            while (i++ < rects) {
+                singleProcess(ctx);
+            }
+            times -= 1;
+            timeout = setTimeout(function() {
+                handler(ctx, times, rects);
+            }, 0);
+        }
+
+        $render.onclick = function() {
+
+            if ($render.innerHTML === 'start') {
+                $render.innerHTML = 'stop';
+            
+                const canvas = document.getElementById('container');
+                const ctx = canvas.getContext('2d');
+                const times = parseInt(document.getElementById('st_times').value);
+                const rects = parseInt(document.getElementById('st_rects').value);
+
+                handler(ctx, times, rects);
+
+            } else {
+                $render.innerHTML = 'start';
+                clearTimeout(timeout);
+            }
+
+        };
+
+    </script>
+</body>
+
+</html>

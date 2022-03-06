@@ -1,0 +1,15 @@
+{
+    "name": "fps-monitor",
+    "version": "1.0.0",
+    "description": "fps-monitor",
+    "main": "dist/fps-monitor.js",
+    "scripts": {},
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/cenfun/fps-monitor.git"
+    },
+    "devDependencies": {
+        "eslint": "^8.10.0",
+        "eslint-plugin-html": "^6.2.0"
+    }
+}
