@@ -3,7 +3,9 @@
     "version": "1.0.0",
     "description": "fps-detector",
     "main": "dist/fps-detector.js",
-    "scripts": {},
+    "scripts": {
+        "publish": "sf b -m && sf publish patch"
+    },
     "files": [
         "dist"
     ],
