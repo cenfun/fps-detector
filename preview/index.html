@@ -5,21 +5,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <link rel="icon" href="data:,">
-    <title>fps-monitor demo</title>
+    <title>fps-detector demo</title>
     <!--inject:start-->
-    <script src="../dist/fps-monitor.js"></script>
+    <script src="../dist/fps-detector.js"></script>
     <!--inject:end-->
     <style>
         body {
-            background-color: black; 
-            color: #fff; 
+            background-color: black;
+            color: #fff;
         }
-
     </style>
 </head>
 
 <body>
-    <div class="fps-monitor"></div>
+    <div class="fps-detector"></div>
     <p>
         <label>times:</label>
         <select id="st_times">
@@ -45,8 +44,8 @@
     </p>
     <canvas id="container" width="1000" height="500"></canvas>
     <script>
-        const FPSMonitor = window['fps-monitor'].FPSMonitor;
-        new FPSMonitor('.fps-monitor');
+        const FPSDetector = window['fps-detector'].FPSDetector;
+        new FPSDetector('.fps-detector');
 
         //mock low performance
         let timeout;
@@ -84,7 +83,7 @@
 
             if ($render.innerHTML === 'start') {
                 $render.innerHTML = 'stop';
-            
+
                 const canvas = document.getElementById('container');
                 const ctx = canvas.getContext('2d');
                 const times = parseInt(document.getElementById('st_times').value);

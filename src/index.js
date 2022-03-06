@@ -1,4 +1,4 @@
-class FPSMonitor {
+class FPSDetector {
     constructor($container, option) {
         if (typeof $container === 'string') {
             $container = document.querySelector($container);
@@ -215,6 +215,6 @@ class FPSMonitor {
 
 }
 
-export { FPSMonitor };
+export { FPSDetector };
 
-export default FPSMonitor;
+export default FPSDetector;
