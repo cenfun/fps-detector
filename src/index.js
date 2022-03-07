@@ -113,7 +113,7 @@ class FPSDetector {
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillStyle = this.getMEMColor(mem);
-            ctx.fillText(`MEM ${mem.toFixed(1)} MB`, w / 2, h / 2);
+            ctx.fillText(`MEM ${mem.toFixed(1)} MB`, w / 2, Math.ceil(h / 2) + 1);
 
             return;
         }
