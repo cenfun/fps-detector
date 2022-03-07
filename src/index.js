@@ -7,9 +7,11 @@ class FPSDetector {
         this.option = Object.assign({
             width: 85,
             height: 30,
+
+            fpsLevels: [10, 30],
+            memLevels: [200, 100],
             colors: ['red', 'orange', 'green'],
-            fpsLevel: [10, 30],
-            memLevel: [100, 50],
+
             bgColor: '#fff',
             fgColor: '#ddd',
             padding: 1
@@ -149,10 +151,10 @@ class FPSDetector {
     //asc
     getFPSColor(v) {
         const colors = this.option.colors;
-        const fpsLevel = this.option.fpsLevel;
+        const fpsLevels = this.option.fpsLevels;
         let i;
-        for (i = 0; i < fpsLevel.length; i++) {
-            const item = fpsLevel[i];
+        for (i = 0; i < fpsLevels.length; i++) {
+            const item = fpsLevels[i];
             if (v < item) {
                 return colors[i];
             }
@@ -163,10 +165,10 @@ class FPSDetector {
     //desc
     getMEMColor(v) {
         const colors = this.option.colors;
-        const memLevel = this.option.memLevel;
+        const memLevels = this.option.memLevels;
         let i;
-        for (i = 0; i < memLevel.length; i++) {
-            const item = memLevel[i];
+        for (i = 0; i < memLevels.length; i++) {
+            const item = memLevels[i];
             if (v > item) {
                 return colors[i];
             }
