@@ -15,3 +15,14 @@ new FPSDetector('.fps-detector', {
 });
 ```
 see [preview/index.html](preview/index.html)
+
+# CDN Usage
+```html
+<script src="https://cdn.jsdelivr.net/npm/fps-detector@latest/dist/fps-detector.js"></script>
+
+<div class="fps-detector"></div>
+<script>
+    const FPSDetector = window['fps-detector'].FPSDetector;
+    new FPSDetector('.fps-detector');
+</script> 
+```
