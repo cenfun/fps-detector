@@ -4,7 +4,7 @@ class FPSDetector {
             $container = document.querySelector($container);
         }
 
-        this.option = Object.assign({
+        this.option = {
             width: 85,
             height: 30,
 
@@ -14,8 +14,9 @@ class FPSDetector {
 
             bgColor: '#fff',
             fgColor: '#ddd',
-            padding: 1
-        }, option);
+            padding: 1,
+            ... option
+        };
 
         const $canvas = document.createElement('canvas');
         $canvas.style.display = 'block';
@@ -67,7 +68,7 @@ class FPSDetector {
         this.initNumbers($canvas);
 
         this.ctx = $canvas.getContext('2d');
-        
+
         this.start();
 
     }
@@ -107,7 +108,7 @@ class FPSDetector {
             const mem = memory.usedJSHeapSize / 1048576;
             //const memTotal = memory.jsHeapSizeLimit / 1048576;
             //const per = (mem / memTotal * 100).toFixed(2);
-    
+
             //console.log(mem, per);
             ctx.font = 'Bold 16px';
             ctx.textAlign = 'center';
@@ -135,7 +136,7 @@ class FPSDetector {
         });
 
         const str = `${lastItem}`.padStart(2, '0');
-        
+
         const x = Math.floor(lx + lw + padding);
         const y = Math.ceil((h - ih) / 2);
 
@@ -179,9 +180,9 @@ class FPSDetector {
     initNumbers($container) {
         const numbers = this.numbers;
         const colors = this.option.colors;
-        Object.keys(numbers).forEach(key => {
+        Object.keys(numbers).forEach((key) => {
             const item = numbers[key];
-            colors.forEach(color => {
+            colors.forEach((color) => {
                 if (item[color]) {
                     return;
                 }
@@ -246,7 +247,7 @@ class FPSDetector {
             this.frames = 1;
             this.startTime = now - d;
         }
-       
+
         this.update();
     }
 

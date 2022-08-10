@@ -1,9 +1,13 @@
 {
     "name": "fps-detector",
     "version": "1.0.2",
-    "description": "fps-detector",
+    "description": "A tool to display FPS in real time for detecting JS performance",
     "main": "dist/fps-detector.js",
-    "scripts": {},
+    "scripts": {
+        "build": "sf lint && sf b -p",
+        "patch": "npm run build && sf publish patch",
+        "pack": "sf lint && sf pack -o docs -q v={version}"
+    },
     "files": [
         "dist"
     ],
@@ -12,8 +16,9 @@
         "url": "git+https://github.com/cenfun/fps-detector.git"
     },
     "devDependencies": {
-        "eslint": "^8.10.0",
-        "eslint-plugin-html": "^6.2.0"
+        "eslint": "^8.21.0",
+        "eslint-config-plus": "^1.0.3",
+        "eslint-plugin-html": "^7.1.0"
     },
     "dependencies": {}
 }
