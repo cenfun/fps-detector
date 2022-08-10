@@ -28,3 +28,19 @@ see [preview/index.html](preview/index.html)
     new FPSDetector('.fps-detector');
 </script> 
 ```
+
+## Options
+```js
+new FPSDetector('.fps-detector', {
+    width: 85,
+    height: 30,
+
+    fpsLevels: [10, 30],
+    memLevels: [200, 100],
+    colors: ['red', 'orange', 'green'],
+
+    bgColor: '#fff',
+    fgColor: '#ddd',
+    padding: 1
+});
+```
