@@ -97,7 +97,7 @@ class FPSDetector {
             startIndex = padding + (lw - list.length);
         }
 
-        //console.log(list);
+        // console.log(list);
 
         ctx.fillStyle = this.option.bgColor;
         ctx.fillRect(0, 0, w, h);
@@ -106,10 +106,10 @@ class FPSDetector {
 
             const memory = window.performance.memory;
             const mem = memory.usedJSHeapSize / 1048576;
-            //const memTotal = memory.jsHeapSizeLimit / 1048576;
-            //const per = (mem / memTotal * 100).toFixed(2);
+            // const memTotal = memory.jsHeapSizeLimit / 1048576;
+            // const per = (mem / memTotal * 100).toFixed(2);
 
-            //console.log(mem, per);
+            // console.log(mem, per);
             ctx.font = 'Bold 16px';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
@@ -149,7 +149,7 @@ class FPSDetector {
 
     }
 
-    //asc
+    // asc
     getFPSColor(v) {
         const colors = this.option.colors;
         const fpsLevels = this.option.fpsLevels;
@@ -163,7 +163,7 @@ class FPSDetector {
         return colors[i];
     }
 
-    //desc
+    // desc
     getMEMColor(v) {
         const colors = this.option.colors;
         const memLevels = this.option.memLevels;
@@ -229,7 +229,7 @@ class FPSDetector {
 
         const now = window.performance.now();
         let d = now - this.startTime;
-        //count each 1s
+        // count each 1s
         if (d < 1000) {
             this.frames += 1;
         } else {
@@ -240,10 +240,10 @@ class FPSDetector {
                 d -= 1000;
             }
 
-            //1s
+            // 1s
             list.unshift(this.frames);
             this.render();
-            //next
+            // next
             this.frames = 1;
             this.startTime = now - d;
         }
