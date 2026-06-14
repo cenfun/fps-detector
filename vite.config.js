@@ -25,6 +25,7 @@ export default defineConfig(({ mode }) => {
     };
 
     return {
+        base: './',
         server: {
             open: true
         },
