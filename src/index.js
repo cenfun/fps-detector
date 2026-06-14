@@ -105,6 +105,9 @@ class FPSDetector {
         if (this.showMemory) {
 
             const memory = window.performance.memory;
+            if (!memory) {
+                return;
+            }
             const mem = memory.usedJSHeapSize / 1048576;
             // const memTotal = memory.jsHeapSizeLimit / 1048576;
             // const per = (mem / memTotal * 100).toFixed(2);

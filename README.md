@@ -16,7 +16,7 @@ new FPSDetector('.fps-detector', {
     height: 30
 });
 ```
-see [preview/index.html](preview/index.html)
+see [index.html](index.html)
 
 ## CDN Usage
 ```html

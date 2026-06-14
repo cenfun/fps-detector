@@ -3,6 +3,12 @@
     "version": "1.0.3",
     "type": "module",
     "description": "A tool to display FPS in real time for detecting JS performance",
+    "keywords": [
+        "fps",
+        "performance",
+        "detector",
+        "monitor"
+    ],
     "main": "dist/fps-detector.js",
     "module": "dist/fps-detector.esm.js",
     "types": "dist/fps-detector.d.ts",
