@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
     <link rel="icon" href="data:,">
-    <title>fps-detector demo</title>
+    <title>fps-detector example</title>
     <style>
         body {
             background-color: black;
@@ -71,12 +71,12 @@
                 singleProcess(ctx);
             }
             times -= 1;
-            timeout = setTimeout(function() {
+            timeout = setTimeout(function () {
                 handler(ctx, times, rects);
             }, 0);
         }
 
-        $render.onclick = function() {
+        $render.onclick = function () {
 
             if ($render.innerHTML === 'start') {
                 $render.innerHTML = 'stop';
