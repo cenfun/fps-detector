@@ -36,7 +36,7 @@ jobs:
         with:
           node-version: 24.x
           cache: 'npm'
-      - run: npm ci
+      - run: npm i -dd
       - run: npm run build:docs
         env:
           FORCE_COLOR: true

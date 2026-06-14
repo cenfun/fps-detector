@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import { copyFileSync } from 'fs';
 
 export default defineConfig(({ mode }) => {
     const isDocs = mode === 'docs';
@@ -27,6 +28,16 @@ export default defineConfig(({ mode }) => {
         server: {
             open: true
         },
-        build: buildConfig
+        build: buildConfig,
+        plugins: isDocs ? [] : [{
+            name: 'copy-dts',
+            closeBundle() {
+                copyFileSync(
+                    resolve(import.meta.dirname, 'src/fps-detector.d.ts'),
+                    resolve(import.meta.dirname, 'dist/fps-detector.d.ts')
+                );
+                console.log('  ✓ dist/fps-detector.d.ts copied');
+            }
+        }]
     };
 });

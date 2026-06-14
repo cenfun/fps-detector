@@ -5,8 +5,10 @@
     "description": "A tool to display FPS in real time for detecting JS performance",
     "main": "dist/fps-detector.js",
     "module": "dist/fps-detector.esm.js",
+    "types": "dist/fps-detector.d.ts",
     "exports": {
         ".": {
+            "types": "./dist/fps-detector.d.ts",
             "import": "./dist/fps-detector.esm.js",
             "require": "./dist/fps-detector.js",
             "default": "./dist/fps-detector.js"
