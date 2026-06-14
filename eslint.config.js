@@ -8,8 +8,7 @@ export default [
         ignores: [
             'dist',
             'docs',
-            'node_modules',
-            '.temp'
+            'node_modules'
         ]
     },
     plus
